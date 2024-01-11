@@ -18,28 +18,29 @@ function randomizePosition() {
 
     // Check for overlap with text box
     if (
-        randomX > textBox.offsetLeft &&
+        randomX > textBox.offsetLeft - button.clientWidth &&
         randomX < textBox.offsetLeft + textBoxWidth &&
         randomY > textBox.offsetTop &&
         randomY < textBox.offsetTop + textBox.clientHeight
     ) {
-        randomX = textBox.offsetLeft + textBoxWidth; // Adjust X position
+        randomX = textBox.offsetLeft + textBoxWidth; // Adjust X position to the right of the text box
     }
 
     // Check for overlap with "Yes" button
     if (
-        randomX > yesButton.offsetLeft &&
+        randomX > yesButton.offsetLeft - button.clientWidth &&
         randomX < yesButton.offsetLeft + yesButtonWidth &&
         randomY > yesButton.offsetTop &&
         randomY < yesButton.offsetTop + yesButton.clientHeight
     ) {
-        randomX = yesButton.offsetLeft + yesButtonWidth; // Adjust X position
+        randomX = yesButton.offsetLeft + yesButtonWidth; // Adjust X position to the right of the "Yes" button
     }
 
     button.style.position = 'absolute';
     button.style.left = randomX + 'px';
     button.style.top = randomY + 'px';
 }
+
 
 function redirectToLove() {
     window.location.href = 'love.html';
