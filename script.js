@@ -3,19 +3,33 @@ function randomizePosition() {
     var maxWidth = window.innerWidth - button.clientWidth;
     var maxHeight = window.innerHeight - button.clientHeight;
 
-    // Dimensions of text box and "Yes" button
+    // Dimensions and positions of text box and "Yes" button
     var container = document.querySelector('.container');
+    var containerRect = container.getBoundingClientRect();
+
     var textBoxWidth = container.clientWidth;
     var textBoxHeight = container.clientHeight;
-    var yesButtonWidth = document.getElementById('yesBtn').clientWidth;
-    var yesButtonHeight = document.getElementById('yesBtn').clientHeight;
+    var textBoxTop = containerRect.top;
+    var textBoxLeft = containerRect.left;
+
+    var yesButton = document.getElementById('yesBtn');
+    var yesButtonRect = yesButton.getBoundingClientRect();
+    var yesButtonWidth = yesButtonRect.width;
+    var yesButtonHeight = yesButtonRect.height;
+    var yesButtonTop = yesButtonRect.top;
+    var yesButtonLeft = yesButtonRect.left;
 
     // Adjusting the available width and height considering text box and "Yes" button
-    maxWidth = maxWidth - Math.max(textBoxWidth, yesButtonWidth);
+    maxWidth = maxWidth - textBoxWidth - yesButtonWidth;
     maxHeight = maxHeight - Math.max(textBoxHeight, yesButtonHeight);
 
+    // Random positions within adjusted bounds
     var randomX = Math.floor(Math.random() * maxWidth);
     var randomY = Math.floor(Math.random() * maxHeight);
+
+    // Adjust positions to avoid overlapping with text box and "Yes" button
+    randomX += Math.max(textBoxLeft + textBoxWidth, yesButtonLeft + yesButtonWidth);
+    randomY += Math.max(textBoxTop, yesButtonTop + yesButtonHeight);
 
     button.style.position = 'absolute';
     button.style.left = randomX + 'px';
