@@ -4,11 +4,15 @@ function randomizePosition() {
     var maxHeight = window.innerHeight - button.clientHeight;
 
     // Dimensions of text box and "Yes" button
-    var textBoxWidth = document.querySelector('.container').clientWidth;
+    var container = document.querySelector('.container');
+    var textBoxWidth = container.clientWidth;
+    var textBoxHeight = container.clientHeight;
     var yesButtonWidth = document.getElementById('yesBtn').clientWidth;
+    var yesButtonHeight = document.getElementById('yesBtn').clientHeight;
 
-    // Adjusting the available width considering text box and "Yes" button
-    maxWidth = maxWidth - textBoxWidth - yesButtonWidth;
+    // Adjusting the available width and height considering text box and "Yes" button
+    maxWidth = maxWidth - Math.max(textBoxWidth, yesButtonWidth);
+    maxHeight = maxHeight - Math.max(textBoxHeight, yesButtonHeight);
 
     var randomX = Math.floor(Math.random() * maxWidth);
     var randomY = Math.floor(Math.random() * maxHeight);
