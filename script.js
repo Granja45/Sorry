@@ -3,29 +3,45 @@ function randomizePosition() {
     var maxWidth = window.innerWidth - button.clientWidth;
     var maxHeight = window.innerHeight - button.clientHeight;
 
-    // Dimensions and positions of text box and "Yes" button
-    var container = document.querySelector('.container');
-    var containerRect = container.getBoundingClientRect();
+    // Dimensions of text box and "Yes" button
+    var textBox = document.querySelector('.container');
+    var textBoxWidth = textBox.clientWidth;
+    var yesButtonWidth = document.getElementById('yesBtn').clientWidth;
 
-    var textBoxWidth = container.clientWidth;
-    var textBoxHeight = container.clientHeight;
-    var textBoxTop = containerRect.top;
-    var textBoxLeft = containerRect.left;
+    // Adjusting the available width considering text box and "Yes" button
+    maxWidth = maxWidth - textBoxWidth - yesButtonWidth;
 
-    var yesButton = document.getElementById('yesBtn');
-    var yesButtonRect = yesButton.getBoundingClientRect();
-    var yesButtonWidth = yesButtonRect.width;
-    var yesButtonHeight = yesButtonRect.height;
-    var yesButtonTop = yesButtonRect.top;
-    var yesButtonLeft = yesButtonRect.left;
+    // Flag to check if the new position overlaps with other elements
+    var overlap = true;
 
-    // Random positions within adjusted bounds
-    var randomX = Math.random() * maxWidth;
-    var randomY = Math.random() * maxHeight;
+    while (overlap) {
+        var randomX = Math.floor(Math.random() * maxWidth);
+        var randomY = Math.floor(Math.random() * maxHeight);
 
-    // Adjust positions to avoid overlapping with text box and "Yes" button
-    randomX += Math.max(textBoxLeft + textBoxWidth, yesButtonLeft + yesButtonWidth);
-    randomY += Math.max(textBoxTop, yesButtonTop + yesButtonHeight);
+        // Check for overlap with text box
+        if (
+            randomX > textBox.offsetLeft &&
+            randomX < textBox.offsetLeft + textBoxWidth &&
+            randomY > textBox.offsetTop &&
+            randomY < textBox.offsetTop + textBox.clientHeight
+        ) {
+            continue; // Overlaps with text box, regenerate position
+        }
+
+        // Check for overlap with "Yes" button
+        var yesButton = document.getElementById('yesBtn');
+        if (
+            randomX > yesButton.offsetLeft &&
+            randomX < yesButton.offsetLeft + yesButtonWidth &&
+            randomY > yesButton.offsetTop &&
+            randomY < yesButton.offsetTop + yesButton.clientHeight
+        ) {
+            continue; // Overlaps with "Yes" button, regenerate position
+        }
+
+        // No overlap, break the loop
+        overlap = false;
+    }
 
     button.style.position = 'absolute';
     button.style.left = randomX + 'px';
