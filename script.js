@@ -19,13 +19,9 @@ function randomizePosition() {
     var yesButtonTop = yesButtonRect.top;
     var yesButtonLeft = yesButtonRect.left;
 
-    // Adjusting the available width and height considering text box and "Yes" button
-    maxWidth = maxWidth - textBoxWidth - yesButtonWidth;
-    maxHeight = maxHeight - Math.max(textBoxHeight, yesButtonHeight);
-
     // Random positions within adjusted bounds
-    var randomX = Math.floor(Math.random() * maxWidth);
-    var randomY = Math.floor(Math.random() * maxHeight);
+    var randomX = Math.random() * maxWidth;
+    var randomY = Math.random() * maxHeight;
 
     // Adjust positions to avoid overlapping with text box and "Yes" button
     randomX += Math.max(textBoxLeft + textBoxWidth, yesButtonLeft + yesButtonWidth);
