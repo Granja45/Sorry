@@ -6,41 +6,34 @@ function randomizePosition() {
     // Dimensions of text box and "Yes" button
     var textBox = document.querySelector('.container');
     var textBoxWidth = textBox.clientWidth;
-    var yesButtonWidth = document.getElementById('yesBtn').clientWidth;
+    var yesButton = document.getElementById('yesBtn');
+    var yesButtonWidth = yesButton.clientWidth;
 
     // Adjusting the available width considering text box and "Yes" button
     maxWidth = maxWidth - textBoxWidth - yesButtonWidth;
 
-    // Flag to check if the new position overlaps with other elements
-    var overlap = true;
+    // Generate a new position that does not overlap with text box and "Yes" button
+    var randomX = Math.floor(Math.random() * maxWidth);
+    var randomY = Math.floor(Math.random() * maxHeight);
 
-    while (overlap) {
-        var randomX = Math.floor(Math.random() * maxWidth);
-        var randomY = Math.floor(Math.random() * maxHeight);
+    // Check for overlap with text box
+    if (
+        randomX > textBox.offsetLeft &&
+        randomX < textBox.offsetLeft + textBoxWidth &&
+        randomY > textBox.offsetTop &&
+        randomY < textBox.offsetTop + textBox.clientHeight
+    ) {
+        randomX = textBox.offsetLeft + textBoxWidth; // Adjust X position
+    }
 
-        // Check for overlap with text box
-        if (
-            randomX > textBox.offsetLeft &&
-            randomX < textBox.offsetLeft + textBoxWidth &&
-            randomY > textBox.offsetTop &&
-            randomY < textBox.offsetTop + textBox.clientHeight
-        ) {
-            continue; // Overlaps with text box, regenerate position
-        }
-
-        // Check for overlap with "Yes" button
-        var yesButton = document.getElementById('yesBtn');
-        if (
-            randomX > yesButton.offsetLeft &&
-            randomX < yesButton.offsetLeft + yesButtonWidth &&
-            randomY > yesButton.offsetTop &&
-            randomY < yesButton.offsetTop + yesButton.clientHeight
-        ) {
-            continue; // Overlaps with "Yes" button, regenerate position
-        }
-
-        // No overlap, break the loop
-        overlap = false;
+    // Check for overlap with "Yes" button
+    if (
+        randomX > yesButton.offsetLeft &&
+        randomX < yesButton.offsetLeft + yesButtonWidth &&
+        randomY > yesButton.offsetTop &&
+        randomY < yesButton.offsetTop + yesButton.clientHeight
+    ) {
+        randomX = yesButton.offsetLeft + yesButtonWidth; // Adjust X position
     }
 
     button.style.position = 'absolute';
